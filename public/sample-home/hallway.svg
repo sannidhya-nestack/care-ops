@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#f1f5f9"/>
+  <rect x="40" y="40" width="720" height="440" rx="18" fill="#f8fafc" stroke="#64748b" stroke-width="3"/>
+  <rect x="280" y="60" width="240" height="400" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+  <text x="400" y="270" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#334155">Hall path</text>
+  <rect x="80" y="200" width="160" height="120" rx="8" fill="#ccfbf1" stroke="#14b8a6"/>
+  <text x="160" y="270" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" fill="#0f766e">Living</text>
+  <rect x="560" y="200" width="160" height="120" rx="8" fill="#ede9fe" stroke="#8b5cf6"/>
+  <text x="640" y="270" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" fill="#5b21b6">Bedroom</text>
+  <rect x="320" y="420" width="160" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="400" y="446" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#92400e">Exit door</text>
+  <text x="400" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="600" fill="#0f172a">Hallway</text>
+</svg>

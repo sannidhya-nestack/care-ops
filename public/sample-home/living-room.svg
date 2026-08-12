@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#e8eef2"/>
+  <rect x="40" y="40" width="720" height="440" rx="18" fill="#f8fafc" stroke="#94a3b8" stroke-width="3"/>
+  <rect x="80" y="90" width="280" height="160" rx="12" fill="#ccfbf1" stroke="#14b8a6" stroke-width="2"/>
+  <text x="220" y="175" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#0f766e">Sofa zone</text>
+  <rect x="400" y="90" width="320" height="200" rx="12" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+  <text x="560" y="195" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#334155">Media shelf</text>
+  <rect x="80" y="290" width="640" height="150" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+  <text x="400" y="375" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#475569">Open floor</text>
+  <text x="400" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="600" fill="#0f172a">Living room</text>
+</svg>

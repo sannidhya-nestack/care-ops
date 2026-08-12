@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#fff7ed"/>
+  <rect x="40" y="40" width="720" height="440" rx="18" fill="#fffbeb" stroke="#fb923c" stroke-width="3"/>
+  <rect x="100" y="100" width="260" height="200" rx="12" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+  <text x="230" y="210" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#9a3412">Vanity</text>
+  <rect x="420" y="120" width="280" height="280" rx="12" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+  <text x="560" y="270" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#7c2d12">Tub / shower</text>
+  <rect x="120" y="340" width="160" height="100" rx="10" fill="#fef3c7" stroke="#d97706"/>
+  <text x="200" y="400" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" fill="#92400e">Toilet</text>
+  <text x="400" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" font-weight="600" fill="#0f172a">Bathroom</text>
+</svg>

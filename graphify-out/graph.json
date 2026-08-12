@@ -1,0 +1,534 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "core_stack_trio",
+        "label": "Core Stack Trio",
+        "nodes": [
+          "cursor_agents_md_caveman",
+          "cursor_agents_md_ponytail",
+          "cursor_agents_md_graphify"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "AGENTS.md"
+      },
+      {
+        "id": "workflow_compose_tools",
+        "label": "Workflow Composes Core Tools",
+        "nodes": [
+          "cursor_agents_md_coding_workflow",
+          "cursor_agents_md_caveman",
+          "cursor_agents_md_ponytail",
+          "cursor_agents_md_graphify"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "AGENTS.md"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "AGENTS.md Cursor Agent OS",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_agents_os",
+      "community": 0,
+      "norm_label": "agents.md cursor agent os"
+    },
+    {
+      "label": "Core Contract",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a71",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_core_contract",
+      "community": 0,
+      "norm_label": "core contract"
+    },
+    {
+      "label": "Caveman",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72/\u00a74",
+      "source_url": "https://github.com/juliusbrussee/caveman",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_caveman",
+      "community": 0,
+      "norm_label": "caveman"
+    },
+    {
+      "label": "Ponytail",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72/\u00a75",
+      "source_url": "https://github.com/dietrichgebert/ponytail",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_ponytail",
+      "community": 1,
+      "norm_label": "ponytail"
+    },
+    {
+      "label": "Graphify",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72/\u00a76",
+      "source_url": "https://github.com/Graphify-Labs/graphify",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_graphify",
+      "community": 2,
+      "norm_label": "graphify"
+    },
+    {
+      "label": "Compress Output Not Analysis",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Caveman removes filler while preserving technical substance; never minify code.",
+      "id": "cursor_agents_md_output_compression",
+      "community": 0,
+      "norm_label": "compress output not analysis"
+    },
+    {
+      "label": "Compress Implementation Not Correctness",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Ponytail seeks least new machinery without sacrificing security or correctness.",
+      "id": "cursor_agents_md_impl_compression",
+      "community": 1,
+      "norm_label": "compress implementation not correctness"
+    },
+    {
+      "label": "Reduce Discovery Cost",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Graphify for cross-file relationships instead of blind repeated search.",
+      "id": "cursor_agents_md_discovery_cost",
+      "community": 2,
+      "norm_label": "reduce discovery cost"
+    },
+    {
+      "label": "Simplicity Ladder",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a75",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_simplicity_ladder",
+      "community": 1,
+      "norm_label": "simplicity ladder"
+    },
+    {
+      "label": "Repository Exploration Tiers",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a78",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_exploration_tiers",
+      "community": 2,
+      "norm_label": "repository exploration tiers"
+    },
+    {
+      "label": "Coding Workflow A-F",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a79",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_coding_workflow",
+      "community": 0,
+      "norm_label": "coding workflow a-f"
+    },
+    {
+      "label": "Every-10-Prompts Usage Checkpoint",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a710",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_usage_checkpoint",
+      "community": 3,
+      "norm_label": "every-10-prompts usage checkpoint"
+    },
+    {
+      "label": "Graphify Skills Directory",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a77",
+      "source_url": "https://graphify.net/skills/",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_skills_directory",
+      "community": 1,
+      "norm_label": "graphify skills directory"
+    },
+    {
+      "label": "Skill Conflict Priority",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a77",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_conflict_priority",
+      "community": 1,
+      "norm_label": "skill conflict priority"
+    },
+    {
+      "label": "Final Directive",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": "Final",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cursor_agents_md_final_directive",
+      "community": 0,
+      "norm_label": "final directive"
+    },
+    {
+      "label": "Never Guess Cursor Quota",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a710",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Prompt count is not remaining quota; only report verified usage fields.",
+      "id": "cursor_agents_md_never_guess_quota",
+      "community": 3,
+      "norm_label": "never guess cursor quota"
+    },
+    {
+      "label": "Graph Guides Then Verify Source",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a76",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "For security/auth/payments verify critical source before editing.",
+      "id": "cursor_agents_md_grounding_rule",
+      "community": 2,
+      "norm_label": "graph guides then verify source"
+    }
+  ],
+  "links": [
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_caveman"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a79",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_coding_workflow"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a71",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_core_contract"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "Final",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_final_directive"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_graphify"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_ponytail"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a77",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_skills_directory"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a710",
+      "weight": 1.0,
+      "source": "cursor_agents_md_agents_os",
+      "target": "cursor_agents_md_usage_checkpoint"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "weight": 1.0,
+      "source": "cursor_agents_md_caveman",
+      "target": "cursor_agents_md_output_compression"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "weight": 1.0,
+      "source": "cursor_agents_md_caveman",
+      "target": "cursor_agents_md_ponytail"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a79",
+      "weight": 1.0,
+      "source": "cursor_agents_md_coding_workflow",
+      "target": "cursor_agents_md_caveman"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "Final",
+      "weight": 1.0,
+      "source": "cursor_agents_md_final_directive",
+      "target": "cursor_agents_md_caveman"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a79",
+      "weight": 1.0,
+      "source": "cursor_agents_md_coding_workflow",
+      "target": "cursor_agents_md_ponytail"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a77",
+      "weight": 1.0,
+      "source": "cursor_agents_md_conflict_priority",
+      "target": "cursor_agents_md_ponytail"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "Final",
+      "weight": 1.0,
+      "source": "cursor_agents_md_final_directive",
+      "target": "cursor_agents_md_ponytail"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "weight": 1.0,
+      "source": "cursor_agents_md_ponytail",
+      "target": "cursor_agents_md_impl_compression"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a75",
+      "weight": 1.0,
+      "source": "cursor_agents_md_ponytail",
+      "target": "cursor_agents_md_simplicity_ladder"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a79",
+      "weight": 1.0,
+      "source": "cursor_agents_md_coding_workflow",
+      "target": "cursor_agents_md_graphify"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a78",
+      "weight": 1.0,
+      "source": "cursor_agents_md_graphify",
+      "target": "cursor_agents_md_exploration_tiers"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "Final",
+      "weight": 1.0,
+      "source": "cursor_agents_md_final_directive",
+      "target": "cursor_agents_md_graphify"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a72",
+      "weight": 1.0,
+      "source": "cursor_agents_md_graphify",
+      "target": "cursor_agents_md_discovery_cost"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a76",
+      "weight": 1.0,
+      "source": "cursor_agents_md_graphify",
+      "target": "cursor_agents_md_grounding_rule"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a710",
+      "weight": 1.0,
+      "source": "cursor_agents_md_usage_checkpoint",
+      "target": "cursor_agents_md_never_guess_quota"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "\u00a77",
+      "weight": 1.0,
+      "source": "cursor_agents_md_skills_directory",
+      "target": "cursor_agents_md_conflict_priority"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "core_stack_trio",
+      "label": "Core Stack Trio",
+      "nodes": [
+        "cursor_agents_md_caveman",
+        "cursor_agents_md_ponytail",
+        "cursor_agents_md_graphify"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md"
+    },
+    {
+      "id": "workflow_compose_tools",
+      "label": "Workflow Composes Core Tools",
+      "nodes": [
+        "cursor_agents_md_coding_workflow",
+        "cursor_agents_md_caveman",
+        "cursor_agents_md_ponytail",
+        "cursor_agents_md_graphify"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md"
+    }
+  ]
+}

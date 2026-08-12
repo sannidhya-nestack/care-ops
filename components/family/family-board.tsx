@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -43,13 +43,6 @@ export function FamilyBoard() {
   >([]);
   const [activeScenario, setActiveScenario] = useState(0);
 
-  useEffect(() => {
-    // Deep links: load catalog only — AI output stays blank until user clicks Generate
-    if (params.get("alert") || params.get("from")) {
-      void loadDemoData({ autoDraft: false, preferAlert: params.get("alert") });
-    }
-  }, [params]);
-
   const selectedAlert = alerts.find((a) => a.id === alertId);
   const isRedAlert =
     selectedAlert?.severity === "high" ||
@@ -58,7 +51,7 @@ export function FamilyBoard() {
     selectedAlert?.type === "prolonged_absence" ||
     tone === "Action-needed";
 
-  async function fetchCatalog() {
+  const fetchCatalog = useCallback(async () => {
     const res = await fetch("/api/family-draft");
     const data = await res.json();
     const nextAlerts = (data.alerts ?? []) as AlertRow[];
@@ -66,87 +59,100 @@ export function FamilyBoard() {
     setAlerts(nextAlerts);
     setContacts(nextContacts);
     return { alerts: nextAlerts, contacts: nextContacts };
-  }
+  }, []);
 
-  async function draft(opts?: {
-    alertId?: string;
-    contactId?: string;
-    tone?: "Reassuring" | "Action-needed";
-    language?: string;
-  }) {
-    const aId = opts?.alertId ?? alertId;
-    const cId = opts?.contactId ?? contactId;
-    const t = opts?.tone ?? tone;
-    const lang = opts?.language ?? language;
-    if (!aId || !cId) return;
-    setRunning(true);
-    setStep(0);
-    setMessage("");
-    setSubject("");
-    try {
-      const res = await fetch("/api/family-draft", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ alertId: aId, contactId: cId, tone: t, language: lang }),
-      });
-      let buf = "";
-      await readSse(res, (event, data) => {
-        if (event === "step") setStep((data as { index: number }).index);
-        if (event === "token") {
-          buf += (data as { text: string }).text;
-          setMessage(buf);
-        }
-        if (event === "result") {
-          const d = data as {
-            subject: string;
-            message: string;
-            tone_variants: { tone: "Reassuring" | "Action-needed"; message: string }[];
-          };
-          setSubject(d.subject);
-          setMessage(d.message);
-          setVariants(d.tone_variants ?? []);
-          pushActivity("family", d.subject);
-        }
-      });
-      setStep(3);
-    } finally {
-      setRunning(false);
-    }
-  }
-
-  async function loadDemoData(opts?: { autoDraft?: boolean; preferAlert?: string | null }) {
-    setLoadingDemo(true);
-    try {
-      const { alerts: nextAlerts, contacts: nextContacts } = await fetchCatalog();
-      const scenario = FAMILY_DEMO_SCENARIOS[0]!;
-      const prefer = opts?.preferAlert || scenario.alertId;
-      const alert = nextAlerts.find((a) => a.id === prefer) ?? nextAlerts[0];
-      const contact =
-        nextContacts.find((c) => c.id === scenario.contactId) ?? nextContacts[0];
-      if (!alert || !contact) return;
-      setAlertId(alert.id);
-      setContactId(contact.id);
-      setLanguage(contact.preferred_language);
-      setTone(scenario.tone);
-      setActiveScenario(0);
-      setDemoLoaded(true);
+  const draft = useCallback(
+    async (opts?: {
+      alertId?: string;
+      contactId?: string;
+      tone?: "Reassuring" | "Action-needed";
+      language?: string;
+    }) => {
+      const aId = opts?.alertId ?? alertId;
+      const cId = opts?.contactId ?? contactId;
+      const t = opts?.tone ?? tone;
+      const lang = opts?.language ?? language;
+      if (!aId || !cId) return;
+      setRunning(true);
+      setStep(0);
       setMessage("");
       setSubject("");
-      setVariants([]);
-      pushActivity("family", "Loaded family demo alerts");
-
-      if (opts?.autoDraft === true) {
-        await draft({
-          alertId: alert.id,
-          contactId: contact.id,
-          tone: scenario.tone,
-          language: contact.preferred_language,
+      try {
+        const res = await fetch("/api/family-draft", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ alertId: aId, contactId: cId, tone: t, language: lang }),
         });
+        let buf = "";
+        await readSse(res, (event, data) => {
+          if (event === "step") setStep((data as { index: number }).index);
+          if (event === "token") {
+            buf += (data as { text: string }).text;
+            setMessage(buf);
+          }
+          if (event === "result") {
+            const d = data as {
+              subject: string;
+              message: string;
+              tone_variants: { tone: "Reassuring" | "Action-needed"; message: string }[];
+            };
+            setSubject(d.subject);
+            setMessage(d.message);
+            setVariants(d.tone_variants ?? []);
+            pushActivity("family", d.subject);
+          }
+        });
+        setStep(3);
+      } finally {
+        setRunning(false);
       }
-    } finally {
-      setLoadingDemo(false);
+    },
+    [alertId, contactId, tone, language]
+  );
+
+  const loadDemoData = useCallback(
+    async (opts?: { autoDraft?: boolean; preferAlert?: string | null }) => {
+      setLoadingDemo(true);
+      try {
+        const { alerts: nextAlerts, contacts: nextContacts } = await fetchCatalog();
+        const scenario = FAMILY_DEMO_SCENARIOS[0]!;
+        const prefer = opts?.preferAlert || scenario.alertId;
+        const alert = nextAlerts.find((a) => a.id === prefer) ?? nextAlerts[0];
+        const contact =
+          nextContacts.find((c) => c.id === scenario.contactId) ?? nextContacts[0];
+        if (!alert || !contact) return;
+        setAlertId(alert.id);
+        setContactId(contact.id);
+        setLanguage(contact.preferred_language);
+        setTone(scenario.tone);
+        setActiveScenario(0);
+        setDemoLoaded(true);
+        setMessage("");
+        setSubject("");
+        setVariants([]);
+        pushActivity("family", "Loaded family demo alerts");
+
+        if (opts?.autoDraft === true) {
+          await draft({
+            alertId: alert.id,
+            contactId: contact.id,
+            tone: scenario.tone,
+            language: contact.preferred_language,
+          });
+        }
+      } finally {
+        setLoadingDemo(false);
+      }
+    },
+    [fetchCatalog, draft]
+  );
+
+  useEffect(() => {
+    // Deep links: load catalog only — AI output stays blank until user clicks Generate
+    if (params.get("alert") || params.get("from")) {
+      void loadDemoData({ autoDraft: false, preferAlert: params.get("alert") });
     }
-  }
+  }, [params, loadDemoData]);
 
   // Select scenario ONLY (does not auto-generate until user clicks Generate)
   function selectScenario(index: number) {

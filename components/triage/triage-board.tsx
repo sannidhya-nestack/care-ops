@@ -743,7 +743,7 @@ export function TriageBoard() {
                             </p>
                           </div>
                           <p className="mt-2 text-[11px] leading-relaxed text-slate-600 italic">
-                            "{selected.enrichment.resident.recentEvents[0]}"
+                            &quot;{selected.enrichment.resident.recentEvents[0]}&quot;
                           </p>
                         </div>
                       ) : (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -116,6 +116,92 @@ How can I help you with support today?`,
     void refreshSources();
   }, []);
 
+  const sendMessage = useCallback(
+    async (textToSend?: string) => {
+      const q = (textToSend ?? questionInput).trim();
+      if (!q || running) return;
+
+      setQuestionInput("");
+      setActiveTab("copilot");
+
+      const userMsgId = `user-${Date.now()}`;
+      const agentMsgId = `agent-${Date.now()}`;
+      const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+      const userMsg: ChatMessage = {
+        id: userMsgId,
+        sender: "user",
+        text: q,
+        timestamp: timeStr,
+      };
+
+      const initialAgentMsg: ChatMessage = {
+        id: agentMsgId,
+        sender: "agent",
+        text: "",
+        timestamp: timeStr,
+        isStreaming: true,
+      };
+
+      setMessages((prev) => [...prev, userMsg, initialAgentMsg]);
+      setRunning(true);
+
+      try {
+        const res = await fetch("/api/copilot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: q }),
+        });
+
+        let currentText = "";
+        let retrievedCitations: Cite[] = [];
+
+        await readSse(res, (event, data) => {
+          if (event === "sources") {
+            const d = data as { citations: Cite[] };
+            retrievedCitations = d.citations ?? [];
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === agentMsgId ? { ...msg, citations: retrievedCitations } : msg
+              )
+            );
+          }
+          if (event === "token") {
+            const d = data as { text: string };
+            currentText += d.text;
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === agentMsgId ? { ...msg, text: currentText, isStreaming: true } : msg
+              )
+            );
+          }
+          if (event === "result") {
+            const d = data as { answer: string; citations?: Cite[] };
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === agentMsgId
+                  ? {
+                      ...msg,
+                      text: d.answer,
+                      citations: d.citations?.length ? d.citations : retrievedCitations,
+                      isStreaming: false,
+                    }
+                  : msg
+              )
+            );
+            pushActivity("copilot", "Ops answer grounded in Knowledge Base");
+          }
+        });
+      } finally {
+        setMessages((prev) =>
+          prev.map((msg) => (msg.id === agentMsgId ? { ...msg, isStreaming: false } : msg))
+        );
+        setRunning(false);
+      }
+    },
+    [questionInput, running]
+  );
+
   useEffect(() => {
     const q = params.get("q");
     if (q) {
@@ -123,7 +209,7 @@ How can I help you with support today?`,
     }
     const tab = params.get("tab");
     if (tab === "kb") setActiveTab("kb");
-  }, [params]);
+  }, [params, sendMessage]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -183,89 +269,6 @@ How can I help you with support today?`,
     } finally {
       clearInterval(tick);
       setTimeout(() => setIndexing(false), 400);
-    }
-  }
-
-  async function sendMessage(textToSend?: string) {
-    const q = (textToSend ?? questionInput).trim();
-    if (!q || running) return;
-
-    setQuestionInput("");
-    setActiveTab("copilot");
-
-    const userMsgId = `user-${Date.now()}`;
-    const agentMsgId = `agent-${Date.now()}`;
-    const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-    const userMsg: ChatMessage = {
-      id: userMsgId,
-      sender: "user",
-      text: q,
-      timestamp: timeStr,
-    };
-
-    const initialAgentMsg: ChatMessage = {
-      id: agentMsgId,
-      sender: "agent",
-      text: "",
-      timestamp: timeStr,
-      isStreaming: true,
-    };
-
-    setMessages((prev) => [...prev, userMsg, initialAgentMsg]);
-    setRunning(true);
-
-    try {
-      const res = await fetch("/api/copilot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: q }),
-      });
-
-      let currentText = "";
-      let retrievedCitations: Cite[] = [];
-
-      await readSse(res, (event, data) => {
-        if (event === "sources") {
-          const d = data as { citations: Cite[] };
-          retrievedCitations = d.citations ?? [];
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === agentMsgId ? { ...msg, citations: retrievedCitations } : msg
-            )
-          );
-        }
-        if (event === "token") {
-          const d = data as { text: string };
-          currentText += d.text;
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === agentMsgId ? { ...msg, text: currentText, isStreaming: true } : msg
-            )
-          );
-        }
-        if (event === "result") {
-          const d = data as { answer: string; citations?: Cite[] };
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === agentMsgId
-                ? {
-                    ...msg,
-                    text: d.answer,
-                    citations: d.citations?.length ? d.citations : retrievedCitations,
-                    isStreaming: false,
-                  }
-                : msg
-            )
-          );
-          pushActivity("copilot", "Ops answer grounded in Knowledge Base");
-        }
-      });
-    } finally {
-      setMessages((prev) =>
-        prev.map((msg) => (msg.id === agentMsgId ? { ...msg, isStreaming: false } : msg))
-      );
-      setRunning(false);
     }
   }
 

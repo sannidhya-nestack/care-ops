@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
@@ -89,10 +89,44 @@ export function InstallBoard() {
   const [newIncNote, setNewIncNote] = useState("");
   const [newIncHr, setNewIncHr] = useState("98");
 
+  const fetchRiskZones = useCallback(
+    async (customIncidents?: LoggedIncident[]) => {
+      const incList = customIncidents || incidents;
+      setRiskZonesLoading(true);
+      setRiskZonesStep("Clustering incidents & identifying risk zones…");
+      try {
+        const res = await fetch("/api/risk-zones", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            incidents: incList,
+            intakeContext: JSON.stringify(intake),
+            stream: true,
+          }),
+        });
+
+        await readSse(res, (event, data) => {
+          if (event === "step") {
+            const d = data as { label: string };
+            setRiskZonesStep(d.label);
+          } else if (event === "result") {
+            setRiskZones(data as RiskZoneAggregation);
+          }
+        });
+      } catch (err) {
+        console.error("Risk zones aggregation error:", err);
+      } finally {
+        setRiskZonesLoading(false);
+        setRiskZonesStep(null);
+      }
+    },
+    [incidents, intake]
+  );
+
   useEffect(() => {
     // Initial fetch of risk zones aggregation
     void fetchRiskZones(DEFAULT_LOGGED_INCIDENTS);
-  }, []);
+  }, [fetchRiskZones]);
 
   async function analyzeCausal(inc: LoggedIncident) {
     setSelectedIncident(inc);
@@ -124,37 +158,6 @@ export function InstallBoard() {
     } finally {
       setCausalLoading(false);
       setCausalStep(null);
-    }
-  }
-
-  async function fetchRiskZones(customIncidents?: LoggedIncident[]) {
-    const incList = customIncidents || incidents;
-    setRiskZonesLoading(true);
-    setRiskZonesStep("Clustering incidents & identifying risk zones…");
-    try {
-      const res = await fetch("/api/risk-zones", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          incidents: incList,
-          intakeContext: JSON.stringify(intake),
-          stream: true,
-        }),
-      });
-
-      await readSse(res, (event, data) => {
-        if (event === "step") {
-          const d = data as { label: string };
-          setRiskZonesStep(d.label);
-        } else if (event === "result") {
-          setRiskZones(data as RiskZoneAggregation);
-        }
-      });
-    } catch (err) {
-      console.error("Risk zones aggregation error:", err);
-    } finally {
-      setRiskZonesLoading(false);
-      setRiskZonesStep(null);
     }
   }
 
@@ -1007,7 +1010,7 @@ export function InstallBoard() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <ShieldAlert className="h-5 w-5 text-amber-400" />
-                          <h3 className="font-display text-base font-semibold">Coverage Gaps · What You're Missing</h3>
+                          <h3 className="font-display text-base font-semibold">Coverage Gaps · What You&apos;re Missing</h3>
                         </div>
                         <Badge className="bg-amber-500/20 text-amber-300 ring-1 ring-amber-400/40 text-[10px]">
                           AI Gap Analysis

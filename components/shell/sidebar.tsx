@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Activity,
   Inbox,
@@ -11,8 +11,10 @@ import {
   ShieldCheck,
   Wrench,
   Layers,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { clearDemoSession } from "@/lib/demo-auth";
 
 const NAV = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -26,6 +28,13 @@ const NAV = [
 
 export function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  function handleSignOut() {
+    clearDemoSession();
+    onClose?.();
+    router.replace("/login");
+  }
 
   return (
     <aside className="flex h-full w-[240px] shrink-0 flex-col border-r border-border/80 bg-gradient-to-b from-[#f7fafb] to-[#eef4f5]">
@@ -72,6 +81,18 @@ export function Sidebar({ onClose }: { onClose?: () => void }) {
           );
         })}
       </nav>
+
+      <div className="border-t border-border/60 p-3">
+        <button
+          onClick={handleSignOut}
+          className="flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-all hover:bg-white/70"
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+            <LogOut className="h-4 w-4" strokeWidth={1.75} />
+          </div>
+          <p className="text-sm font-semibold text-slate-700">Sign out</p>
+        </button>
+      </div>
     </aside>
   );
 }
